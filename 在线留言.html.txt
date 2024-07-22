@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            user-select: none;
+        }
+
+        .screen {
+            overflow: hidden;
+            position: relative;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .send {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 80px;
+            line-height: 80px;
+            background-color: rgba(10, 10, 10, 0.6);
+            text-align: center;
+        }
+
+        .input {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin: -20px -350px;
+            font-size: 0;
+        }
+
+        .text {
+            float: left;
+            width: 600px;
+            height: 40px;
+            border: none;
+            border-radius: 8px 0 0 8px;
+        }
+
+        .s_show div {
+            position: absolute;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .btn {
+            float: left;
+            width: 100px;
+            background-color: orange;
+            line-height: 40px;
+            font-size: 18px;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 0 8px 8px 0;
+        }
+
+        html,
+        body {
+            margin: 0;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            cursor: none;
+            background: black;
+            background: linear-gradient(to bottom, #000000 0%, #5788fe 100%);
+        }
+
+        .filter {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #fe5757;
+            animation: colorChange 30s ease-in-out infinite;
+            animation-fill-mode: both;
+            mix-blend-mode: overlay;
+        }
+
+        @keyframes colorChange {
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.9;
+            }
+        }
+
+        .landscape {
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: 1000px 250px;
+            background-repeat: repeat-x;
+            background-position: center bottom;
+        }
+    </style>
+    <title>美丽的留言板</title>
+</head>
+
+<body>
+    <div class="screen">
+        <div class="landscape"></div>
+        <div class="filter"></div>
+        <canvas id="canvas"></canvas>
+        <div class="send">
+            <div class="input clearfix">
+                <input type="text" class="text" />
+                <div class="btn">发送留言</div>
+            </div>
+        </div>
+        <div class="s_show">
+            <div class="magictime twisterInUp">
+                匿名访客 :
+                【陈美丽万岁！】— 2022-12-28
+                01:19:37
+            </div>
+
+            <div class="magictime twisterInUp">
+                匿名访客 : 【希望直播间能越来越好。】— 2022-11-08
+                19:39:49
+            </div>
+
+            <div class="magictime twisterInUp">
+                匿名访客 : 【点赞👍 点赞👍 点赞👍 】— 2023-07-13
+                00:37:00
+            </div>
+
+            <div class="magictime twisterInUp">
+                匿名访客 : 【现在什么创业更加的赚钱？】— 2023-04-19
+                18:28:43
+            </div>
+
+            <div class="magictime twisterInUp">
+                匿名访客 :
+                【支持主播。】—
+                2023-01-20 20:37:00
+            </div>
+
+            <div class="magictime twisterInUp">
+               陈美丽: 【这是我的弹幕留言板，欢迎大家来留言。】—
+                2023-01-31 23:03:35
+            </div>
+
+            <div class="magictime twisterInUp">
+                匿名访客 :
+                【成功的创业者往往是那些愿意不断学习和适应的人。你们最近学到的最有价值的东西是什么？】— 2023-05-11
+                15:56:11
+            </div>
+
+            <div class="magictime twisterInUp">
+                匿名访客:
+                 【在创业的过程中，建立一个支持你的社区是非常重要的。你们在这个过程中是如何找到志同道合的伙伴的？】—
+                2023-04-12 13:59:07
+            </div>
+
+            <div class="magictime twisterInUp">
+                匿名访客 :
+                 【直播不仅是分享知识的平台，更是一个建立联系的机会。你们在创业中遇到的最大挑战是什么？】— 2023-05-15
+                10:25:04
+            </div>
+
+            <div class="magictime twisterInUp">
+                匿名访客: 
+                【我相信每个人都有独特的想法和视角，今天我们可以一起探讨如何将这些想法变为现实。】— 2023-03-23
+                14:18:44
+            </div>
+
+            <div class="magictime twisterInUp">
+                匿名访客 : 
+                【“成功不是偶然，而是努力的结果。” — 约翰·C·麦克斯威尔】— 2023-07-02
+                09:13:57
+            </div>
+
+            <div class="magictime twisterInUp">
+                匿名访客 : 
+                【“创业就是把一个想法变成现实的过程。” — 理查德·布兰森】—
+                2023-07-18 13:50:43
+            </div>
+
+            <div class="magictime twisterInUp">
+                匿名访客 : 
+                【“在创业的道路上，最大的风险就是不冒险。” — 马克·扎克伯格】— 2023-08-26
+                07:21:47
+            </div>
+
+            <div class="magictime twisterInUp">
+             匿名访客 : 
+             【“你必须相信自己，才能让别人相信你。” — 乔治·S·克拉森】— 2023-06-09
+                17:35:14
+            </div>
+
+            <div class="magictime twisterInUp">
+                匿名访客 : 
+                【“失败并不可怕，放弃才是最大的失败。” — 迈克尔·乔丹】— 2023-09-27 18:16:39
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function Star(id, x, y) {
+            this.id = id;
+            this.x = x;
+            this.y = y;
+            this.r = Math.floor(Math.random() * 2) + 1;
+            var alpha = (Math.floor(Math.random() * 10) + 1) / 10 / 2;
+            this.color = "rgba(255,255,255," + alpha + ")";
+        }
+
+        Star.prototype.draw = function () {
+            ctx.fillStyle = this.color;
+            ctx.shadowBlur = this.r * 2;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+            ctx.closePath();
+            ctx.fill();
+        };
+
+        Star.prototype.move = function () {
+            this.y -= 0.15;
+            if (this.y <= -10) this.y = HEIGHT + 10;
+            this.draw();
+        };
+
+        Star.prototype.die = function () {
+            stars[this.id] = null;
+            delete stars[this.id];
+        };
+
+        function Dot(id, x, y, r) {
+            this.id = id;
+            this.x = x;
+            this.y = y;
+            this.r = Math.floor(Math.random() * 5) + 1;
+            this.maxLinks = 2;
+            this.speed = 0.5;
+            this.a = 0.5;
+            this.aReduction = 0.005;
+            this.color = "rgba(255,255,255," + this.a + ")";
+            this.linkColor = "rgba(255,255,255," + this.a / 4 + ")";
+
+            this.dir = Math.floor(Math.random() * 140) + 200;
+        }
+
+        Dot.prototype.draw = function () {
+            ctx.fillStyle = this.color;
+            ctx.shadowBlur = this.r * 2;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+            ctx.closePath();
+            ctx.fill();
+        };
+
+        Dot.prototype.link = function () {
+            if (this.id == 0) return;
+            var previousDot1 = getPreviousDot(this.id, 1);
+            var previousDot2 = getPreviousDot(this.id, 2);
+            var previousDot3 = getPreviousDot(this.id, 3);
+            if (!previousDot1) return;
+            ctx.strokeStyle = this.linkColor;
+            ctx.moveTo(previousDot1.x, previousDot1.y);
+            ctx.beginPath();
+            ctx.lineTo(this.x, this.y);
+            if (previousDot2 != false) ctx.lineTo(previousDot2.x, previousDot2.y);
+            if (previousDot3 != false) ctx.lineTo(previousDot3.x, previousDot3.y);
+            ctx.stroke();
+            ctx.closePath();
+        };
+
+        function getPreviousDot(id, stepback) {
+            if (id == 0 || id - stepback < 0) return false;
+            if (typeof dots[id - stepback] != "undefined")
+                return dots[id - stepback];
+            else return false;
+        }
+
+        Dot.prototype.move = function () {
+            this.a -= this.aReduction;
+            if (this.a <= 0) {
+                this.die();
+                return;
+            }
+            this.color = "rgba(255,255,255," + this.a + ")";
+            this.linkColor = "rgba(255,255,255," + this.a / 4 + ")";
+            (this.x = this.x + Math.cos(degToRad(this.dir)) * this.speed),
+            (this.y = this.y + Math.sin(degToRad(this.dir)) * this.speed);
+
+            this.draw();
+            this.link();
+        };
+
+        Dot.prototype.die = function () {
+            dots[this.id] = null;
+            delete dots[this.id];
+        };
+
+        var canvas = document.getElementById("canvas"),
+            ctx = canvas.getContext("2d"),
+            WIDTH,
+            HEIGHT,
+            mouseMoving = false,
+            mouseMoveChecker,
+            mouseX,
+            mouseY,
+            stars = [],
+            initStarsPopulation = 80,
+            dots = [],
+            dotsMinDist = 2,
+            maxDistFromCursor = 50;
+
+        setCanvasSize();
+        init();
+
+        function setCanvasSize() {
+            (WIDTH = document.documentElement.clientWidth),
+            (HEIGHT = document.documentElement.clientHeight);
+
+            canvas.setAttribute("width", WIDTH);
+            canvas.setAttribute("height", HEIGHT);
+        }
+
+        function init() {
+            ctx.strokeStyle = "white";
+            ctx.shadowColor = "white";
+            for (var i = 0; i < initStarsPopulation; i++) {
+                stars[i] = new Star(
+                    i,
+                    Math.floor(Math.random() * WIDTH),
+                    Math.floor(Math.random() * HEIGHT)
+                );
+                //stars[i].draw();
+            }
+            ctx.shadowBlur = 0;
+            animate();
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+            for (var i in stars) {
+                stars[i].move();
+            }
+            for (var i in dots) {
+                dots[i].move();
+            }
+            drawIfMouseMoving();
+            requestAnimationFrame(animate);
+        }
+
+        window.onmousemove = function (e) {
+            mouseMoving = true;
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            clearInterval(mouseMoveChecker);
+            mouseMoveChecker = setTimeout(function () {
+                mouseMoving = false;
+            }, 100);
+        };
+
+        function drawIfMouseMoving() {
+            if (!mouseMoving) return;
+
+            if (dots.length == 0) {
+                dots[0] = new Dot(0, mouseX, mouseY);
+                dots[0].draw();
+                return;
+            }
+
+            var previousDot = getPreviousDot(dots.length, 1);
+            var prevX = previousDot.x;
+            var prevY = previousDot.y;
+
+            var diffX = Math.abs(prevX - mouseX);
+            var diffY = Math.abs(prevY - mouseY);
+
+            if (diffX < dotsMinDist || diffY < dotsMinDist) return;
+
+            var xVariation = Math.random() > 0.5 ? -1 : 1;
+            xVariation =
+                xVariation * Math.floor(Math.random() * maxDistFromCursor) + 1;
+            var yVariation = Math.random() > 0.5 ? -1 : 1;
+            yVariation =
+                yVariation * Math.floor(Math.random() * maxDistFromCursor) + 1;
+            dots[dots.length] = new Dot(
+                dots.length,
+                mouseX + xVariation,
+                mouseY + yVariation
+            );
+            dots[dots.length - 1].draw();
+            dots[dots.length - 1].link();
+        }
+
+        function degToRad(deg) {
+            return deg * (Math.PI / 180);
+        }
+    </script>
+
+    <script>
+
+        var aShowList = document.querySelectorAll(".s_show div"); 
+        var oShow = document.querySelector(".s_show");
+        var oSend = document.querySelector(".send");
+        var oBtn = document.querySelector(".btn");
+        var oText = document.querySelector(".text");
+        oBtn.onclick = function () {
+    
+            var oDiv = document.createElement("div"); 
+            oDiv.innerHTML = oText.value; 
+            oDiv.className = "magictime twisterInUp"; 
+            oShow.appendChild(oDiv); 
+            init(oDiv); 
+            oText.value = "";
+            time = time1;
+        };
+
+        for (var i = 0; i < aShowList.length; i++) {
+            init(aShowList[i]); 
+        }
+
+        function init(obj) {
+
+            var screenHeight = document.documentElement.clientHeight; 
+            var maxTop = screenHeight - oSend.offsetHeight - obj.offsetHeight; 
+            obj.style.top = maxTop * Math.random() + "px";
+            
+            var screenWidth = document.documentElement.clientWidth; 
+            var maxLeft = screenWidth - obj.offsetWidth;
+            obj.style.left = maxLeft + "px";
+            
+            obj.style.color = randomColor();
+            move(Math.random() * 5 + 1, obj, maxLeft);
+        }
+        
+        function move(k, obj, maxLeft) {
+            var speed = k; 
+            maxLeft -= speed; 
+            if (maxLeft > -obj.offsetWidth) {
+                obj.style.left = maxLeft + "px";
+                requestAnimationFrame(function () {
+                    move(k, obj, maxLeft);
+                }); 
+            } else {
+                init(obj); 
+            }
+        }
+      
+        function randomColor() {
+            return "#" + Math.random().toString(16).slice(-6); 
+        }
+    </script>
+</body>
+
+</html>
